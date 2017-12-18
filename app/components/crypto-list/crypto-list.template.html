@@ -1,0 +1,19 @@
+  <div class="row">
+      <div class="jumbotron">
+          <h1 class="display-3">Check the price!</h1>
+          <p class="lead">Check the current price of choosen cryptocurrecy.</p>
+          <hr class="my-4">
+          <p>Just start typing name of crypto below and choose one which you interested in.</p>
+          <div class="input-group input-group-lg">
+              <input type="text" class="form-control" ng-model="$ctrl.coinName" placeholder="Type here...">
+            </div>
+        </div>
+  </div>
+  <div class="row justify-content-center">
+    
+    <ul class="coin-list">
+      <li class="coin" ng-repeat="coin in $ctrl.coins | filter:$ctrl.coinName">
+        <a href="#/{{coin.Symbol}}">{{coin.CoinName}}</a>
+      </li>
+    </ul>
+  </div>

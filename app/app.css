@@ -1,0 +1,19 @@
+body {
+  background-color: #4682B4;
+}
+li {
+  float: left;
+  list-style: none;
+  margin-right: 15px;
+}
+a{
+  color: pink
+}
+a:hover {
+  text-decoration: none;
+  color: #00FFFF;
+}
+.jumbotron {
+  width: 100%;
+  background-color: #4682B4;
+}
