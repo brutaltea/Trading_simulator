@@ -17,3 +17,13 @@ a:hover {
   width: 100%;
   background-color: #4682B4;
 }
+
+.price-page {
+  margin-bottom: 100px;
+}
+.get-calc-form {
+  margin-bottom: 20px;
+}
+.price-input {
+  margin-bottom: 100px;
+}
