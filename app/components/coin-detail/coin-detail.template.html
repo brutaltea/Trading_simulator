@@ -7,9 +7,12 @@
 
  <div class="container">    
     <p>Enter the price at which you bought this coin and press the button or just wait till price will update.</p>
-    <div class="input-group input-group-lg price-input">
-      <input ng-model="$ctrl.userPrice" type="text" class="get-calc-form form-control" placeholder="Type here...">      
-      <button ng-click="$ctrl.click()" type="submit" class="get-calc-btn btn btn-dark">Hit Me</button> 
+    <div class="form-group form-group-lg price-input">
+      <form name="priceForm" ng-submit="$ctrl.click()">
+        <input required ng-model="$ctrl.userPrice" ng-pattern="/^[0-9]+\.?[0-9]*$/" name="userPrice" class="get-calc-form form-control" placeholder="Type here...">      
+        <div class="alert alert-danger" ng-show="priceForm.userPrice.$error.pattern">Only numbers, mate.</div>
+        <button ng-disabled="priceForm.userPrice.$error.pattern" type="submit" class="get-calc-btn btn btn-dark">Hit Me</button> 
+      </form>
     </div>
     <div class="row price-page justify-content-center align-items-center">
       <div class="col user-price text-center">

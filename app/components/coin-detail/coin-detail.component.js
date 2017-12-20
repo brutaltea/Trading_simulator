@@ -7,6 +7,8 @@ angular.
         var self = this;
         this.name = $routeParams.coinId;
         this.progress = 0;
+        this.oldPrice = 0;
+        this.priceDiff = 0;
 
         this.progressInterval = function() {
           $interval(function(){
@@ -23,35 +25,38 @@ angular.
 
         $http.get('https://min-api.cryptocompare.com/data/price?fsym=' + $routeParams.coinId + '&tsyms=USD').then(function(response) {
           self.coin = response.data;
+          self.oldPrice = self.coin.USD;
+          console.log('Price:', self.oldPrice)
         });
 
         this.getData = function getData(){
+          self.progress = 0;
           $http.get('https://min-api.cryptocompare.com/data/price?fsym=' + $routeParams.coinId + '&tsyms=USD').then(function(response) {
             self.coin = response.data;
+            this.priceDiff = self.coin.USD - self.oldPrice;
+            if (self.coin.USD >= self.oldPrice) {
+              console.log('spread')              
+            } else {
+              console.log('loss')
+            }
+            console.log('old price:',self.oldPrice)
+            console.log('actual price:', self.coin.USD)
+            console.log('diff', this.priceDiff)
+            self.oldPrice = self.coin.USD;
           });
         };
         
        this.intervalFunction = function intervalFunction(){
          $interval(function(){
            self.getData();
-           self.click();
          }, 60000)
        };
        this.intervalFunction();
        
        this.click = function() {
-        $http.get('https://min-api.cryptocompare.com/data/price?fsym=' + $routeParams.coinId + '&tsyms=USD').then(function(response) {
-            self.coin = response.data;
-          });
-          if (!this.userPrice) {
-            return;
-          } else if (this.userPrice >= self.coin.USD){
-            console.log('bad')
-          } else {
-            console.log('good')
-          }
-       }
-
-      }
+        self.progress = 0;
+        self.getData();
+      };
+    }
     ]
   });
