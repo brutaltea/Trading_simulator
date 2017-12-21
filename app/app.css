@@ -17,13 +17,97 @@ a:hover {
   width: 100%;
   background-color: #4682B4;
 }
-
 .price-page {
-  margin-bottom: 100px;
+  margin-bottom: 50px;
 }
 .get-calc-form {
   margin-bottom: 20px;
 }
 .price-input {
-  margin-bottom: 100px;
+  margin-bottom: 50px;
+}
+.price-up-arrow-block{
+  background-color: azure;
+  height: 110px;
+  border-right: 2px solid black;
+  border-left: 2px solid black;
+  line-height: 110px;
+  font-size: 32px;
+}
+.price-down-arrow-block{
+  background-color: azure;
+  height: 110px;
+  border-right: 2px solid black;
+  border-left: 2px solid black;  
+  border-bottom-right-radius: 10px;
+  border-bottom-left-radius: 10px;
+  border-bottom: 2px solid black;
+  line-height: 110px;
+  font-size: 32px;
+}
+.price-up-arrow {
+  visibility: hidden;
+}
+.price-down-arrow {
+  visibility: hidden;
+}
+.upShow {
+  visibility: visible!important;
+  color: #00FF00;
+}
+.downShow {
+  visibility: visible!important;
+  color:	#FF0000;
+}
+.block-header {
+  width: 100%;
+  height: 50px;
+  background-color: black;
+  color: azure;
+  border-top-right-radius: 10px;
+  border-top-left-radius: 10px;
+  line-height: 50px;
+  font-size: 32px;
+}
+.price-numbers {
+  background-color: azure;
+  height: 35px;
+  border-right: 2px solid black;
+  border-left: 2px solid black;
+  line-height: 35px;
+  font-size: 32px;
+}
+.progress-text {
+  position: absolute;
+  left: 35%;
+  width: 30%;
+  text-align: center;
+}
+.progress{
+  height: 25px!important;
+  line-height: 25px;
+}
+.navbar {
+  margin-bottom: 15px;
+}
+.archive-block {
+  height: 300px;
+  border: 2px solid black;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  overflow: hidden;
+  background-color: azure;
+}
+.archive-header {
+  width: 100%;
+  height: 50px;
+  background-color: black;
+  color: azure;
+  line-height: 50px;
+  font-size: 32px;
+}
+.archive-item {
+  padding-left: 15px;
+  padding-right: 15px;
+  border-bottom: 1px solid black;
 }

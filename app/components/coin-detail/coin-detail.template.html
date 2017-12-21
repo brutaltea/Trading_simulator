@@ -2,6 +2,12 @@
   <a class="navbar-brand" href="#">
     {{$ctrl.name}}
   </a>
+  <div class="price-note col-10 text-center">
+    <div class="progress">
+        <div class="progress-text">The price will be uptated in <b>{{60 - $ctrl.progressBar | number:0}}</b> second</div>
+        <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" style="width: {{$ctrl.progress}}%" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
+    </div>
+  </div>
   <a href="#/">Back</a>
 </nav>
 
@@ -19,18 +25,36 @@
         Your price <br>
         ${{$ctrl.userPrice}}
       </div>
+      <div class="col"></div>
       <div class="col price text-center">
-        Current price <br>
-        ${{$ctrl.coin.USD}}
+        <div class="block-header">Current Price</div>
+        <div class="price-up-arrow-block">
+          <div class="price-up-arrow" ng-class="{upShow: $ctrl.upShow}">
+            <i class="fas fa-caret-up fa-3x"></i>
+          </div> 
+        </div>
+        <div class="price-numbers" ng-class="{upShow: $ctrl.upShow, downShow: $ctrl.downShow}">
+          ${{$ctrl.coin.USD}}
+        </div>
+        <div class="price-down-arrow-block">
+          <div class="price-down-arrow" ng-class="{downShow: $ctrl.downShow}">
+            <i class="fas fa-caret-down fa-3x"></i>
+          </div>
+        </div>
       </div>
     </div>
-    <div class="row">
-      <div class="price-note col-12 text-center">
-          The price updates every 60 seconds
-          <div class="progress">
-              <div class="progress-bar bg-success" role="progressbar" style="width: {{$ctrl.progress}}%" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
+    <div class="row justify-content-center no-gutters">
+      <div class="col-10 archive-block">
+        <div class="archive-header text-center">
+          Old prices archive
+        </div>
+        <div class="archive">
+          <div class="archive-item row" key={{new Date()}} ng-repeat="item in $ctrl.priceArchive track by $index">
+            <div class="col">{{item.time | date:'MMM dd, HH:mm'}}</div>
+            <div class="col">${{item.price}}</div>
           </div>
-      </div>     
+        </div>
+      </div>
     </div>
   </div>
 </div>

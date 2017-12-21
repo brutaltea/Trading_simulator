@@ -9,35 +9,57 @@ angular.
         this.progress = 0;
         this.oldPrice = 0;
         this.priceDiff = 0;
+        this.upShow = false;
+        this.downShow = false;
+        this.progressBar = 0;
+        this.priceArchive = [];
 
         this.progressInterval = function() {
           $interval(function(){
             if (self.progress >= 100) {
               self.progress = 0;
+              self.progressBar = 0;
               return self.progress;
             } else {
-              self.progress = self.progress + 1.7
+              self.progress = self.progress + 0.0167;
+              self.progressBar = self.progressBar + 0.01;
               return self.progress;
             }
-          }, 1000)
+          }, 10)
         };
         this.progressInterval();
 
-        $http.get('https://min-api.cryptocompare.com/data/price?fsym=' + $routeParams.coinId + '&tsyms=USD').then(function(response) {
+        $http.get('https://min-api.cryptocompare.com/data/price?fsym=' + $routeParams.coinId + '&tsyms=USD')
+        .then(function(response) {
           self.coin = response.data;
           self.oldPrice = self.coin.USD;
+          self.priceArchive.push({
+            price: self.coin.USD,
+            time: new Date()
+          })
           console.log('Price:', self.oldPrice)
         });
 
         this.getData = function getData(){
           self.progress = 0;
-          $http.get('https://min-api.cryptocompare.com/data/price?fsym=' + $routeParams.coinId + '&tsyms=USD').then(function(response) {
+          self.progressBar = 0;
+          $http.get('https://min-api.cryptocompare.com/data/price?fsym=' + $routeParams.coinId + '&tsyms=USD')
+          .then(function(response) {
             self.coin = response.data;
+            self.priceArchive.push({
+              price: self.coin.USD,
+              time: new Date()
+            })
+            console.log(self.priceArchive)
             this.priceDiff = self.coin.USD - self.oldPrice;
             if (self.coin.USD >= self.oldPrice) {
-              console.log('spread')              
+              console.log('spread')
+              self.upShow = true;
+              self.downShow = false;
             } else {
-              console.log('loss')
+              console.log('loss');
+              self.upShow = false;
+              self.downShow = true;
             }
             console.log('old price:',self.oldPrice)
             console.log('actual price:', self.coin.USD)
@@ -55,6 +77,7 @@ angular.
        
        this.click = function() {
         self.progress = 0;
+        self.progressBar = 0;
         self.getData();
       };
     }
