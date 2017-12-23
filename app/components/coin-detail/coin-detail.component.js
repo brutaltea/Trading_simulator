@@ -13,6 +13,14 @@ angular.
         this.downShow = false;
         this.progressBar = 0;
         this.priceArchive = [];
+        this.amountError = false;
+        this.userMoney = 1000;
+        this.userCrypto = 0;
+        this.userCryptoOwn = 0;
+
+        this.resetAmount = function resetAmount() {
+          return this.amountError = false;
+        }
 
         this.progressInterval = function() {
           $interval(function(){
@@ -80,6 +88,30 @@ angular.
         self.progressBar = 0;
         self.getData();
       };
+
+      this.buy = function buy() {
+        if (!this.inputAmount){
+          this.amountError = true;
+          return
+        } else {
+          self.userCryptoOwn = self.inputAmount;
+          self.cryptoToUsd = self.userCryptoOwn * self.coin.USD;
+          self.result = function result(){
+
+          }
+        console.log(`buy ${this.inputAmount} of ${this.name}`);
+        }
+      };
+
+     /* this.sell = function sell() {
+        if (!this.inputAmount){
+          this.amountError = true;
+          return
+        } else {
+        console.log(`sell ${this.inputAmount} of ${this.name}`);
+        }
+      };*/
+
     }
-    ]
-  });
+  ]
+});

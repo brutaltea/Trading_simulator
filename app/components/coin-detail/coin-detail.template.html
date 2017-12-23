@@ -11,34 +11,44 @@
   <a href="#/">Back</a>
 </nav>
 
- <div class="container">    
-    <p>Enter the price at which you bought this coin and press the button or just wait till price will update.</p>
-    <div class="form-group form-group-lg price-input">
-      <form name="priceForm" ng-submit="$ctrl.click()">
-        <input required ng-model="$ctrl.userPrice" ng-pattern="/^[0-9]+\.?[0-9]*$/" name="userPrice" class="get-calc-form form-control" placeholder="Type here...">      
-        <div class="alert alert-danger" ng-show="priceForm.userPrice.$error.pattern">Only numbers, mate.</div>
-        <button ng-disabled="priceForm.userPrice.$error.pattern" type="submit" class="get-calc-btn btn btn-dark">Hit Me</button> 
-      </form>
-    </div>
+ <div class="container">
     <div class="row price-page justify-content-center align-items-center">
-      <div class="col user-price text-center">
-        Your price <br>
-        ${{$ctrl.userPrice}}
+      <div class="col block user-info text-center">
+        <div class="block-header">Balance:</div>
+        <div class="block-body">
+          {{$ctrl.name}}: {{$ctrl.userCryptoOwn}} (${{$ctrl.userCryptoOwn * $ctrl.coin.USD}})<br>
+          USD: {{$ctrl.userMoney}}
+         </div>
       </div>
-      <div class="col"></div>
-      <div class="col price text-center">
+      <div class="col block text-center">
+        <div class="block-header">Buy/Sell Crypto Price</div>
+        <div class="block-body">
+          <div class="form-group form-group-lg price-input">
+            <form name="tradingForm">
+              <input ng-model="$ctrl.inputAmount" ng-change="$ctrl.resetAmount()" ng-pattern="/^[0-9]{1,}\.?[0-9]*$/" name="userAmount" class="trading-form form-control" placeholder="Enter amount here...">
+              <div class="alert alert-danger" ng-show="$ctrl.amountError">Enter at least one digit, mate.</div>
+              <div class="alert alert-danger" ng-show="tradingForm.userAmount.$error.pattern">Only numbers, mate.</div>
+              <button ng-disabled="priceForm.userPrice.$error.pattern" ng-click="$ctrl.buy()" type="submit" class="buy-btn btn btn-success">Buy</button> 
+              <!--<button ng-disabled="priceForm.userPrice.$error.pattern" ng-click="$ctrl.sell()" type="submit" class="sell-btn btn btn-danger">Sell</button>-->
+            </form>
+          </div>
+        </div>
+      </div>
+      <div class="col block price text-center">
         <div class="block-header">Current Price</div>
-        <div class="price-up-arrow-block">
-          <div class="price-up-arrow" ng-class="{upShow: $ctrl.upShow}">
-            <i class="fas fa-caret-up fa-3x"></i>
-          </div> 
-        </div>
-        <div class="price-numbers" ng-class="{upShow: $ctrl.upShow, downShow: $ctrl.downShow}">
-          ${{$ctrl.coin.USD}}
-        </div>
-        <div class="price-down-arrow-block">
-          <div class="price-down-arrow" ng-class="{downShow: $ctrl.downShow}">
-            <i class="fas fa-caret-down fa-3x"></i>
+        <div class="block-body">
+          <div class="price-up-arrow-block">
+            <div class="price-up-arrow" ng-class="{upShow: $ctrl.upShow}">
+              <i class="fas fa-caret-up fa-3x"></i>
+            </div> 
+          </div>
+          <div class="price-numbers" ng-class="{upShow: $ctrl.upShow, downShow: $ctrl.downShow}">
+            ${{$ctrl.coin.USD}}
+          </div>
+          <div class="price-down-arrow-block">
+            <div class="price-down-arrow" ng-class="{downShow: $ctrl.downShow}">
+              <i class="fas fa-caret-down fa-3x"></i>
+            </div>
           </div>
         </div>
       </div>

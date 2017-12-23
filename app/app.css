@@ -20,7 +20,16 @@ a:hover {
 .price-page {
   margin-bottom: 50px;
 }
-.get-calc-form {
+.block-body{
+  background-color: azure;
+  height: 260px;
+  border-right: 2px solid black;
+  border-left: 2px solid black;  
+  border-bottom-right-radius: 10px;
+  border-bottom-left-radius: 10px;
+  border-bottom: 2px solid black;
+}
+.trading-form {
   margin-bottom: 20px;
 }
 .price-input {
@@ -29,21 +38,16 @@ a:hover {
 .price-up-arrow-block{
   background-color: azure;
   height: 110px;
-  border-right: 2px solid black;
-  border-left: 2px solid black;
   line-height: 110px;
   font-size: 32px;
 }
 .price-down-arrow-block{
   background-color: azure;
   height: 110px;
-  border-right: 2px solid black;
-  border-left: 2px solid black;  
-  border-bottom-right-radius: 10px;
-  border-bottom-left-radius: 10px;
-  border-bottom: 2px solid black;
   line-height: 110px;
   font-size: 32px;
+  border-bottom-right-radius: 10px;
+  border-bottom-left-radius: 10px;
 }
 .price-up-arrow {
   visibility: hidden;
@@ -72,8 +76,6 @@ a:hover {
 .price-numbers {
   background-color: azure;
   height: 35px;
-  border-right: 2px solid black;
-  border-left: 2px solid black;
   line-height: 35px;
   font-size: 32px;
 }
@@ -110,4 +112,9 @@ a:hover {
   padding-left: 15px;
   padding-right: 15px;
   border-bottom: 1px solid black;
+}
+.archive {
+  overflow-y: auto;
+  overflow-x: hidden;
+  height: 250px;
 }
