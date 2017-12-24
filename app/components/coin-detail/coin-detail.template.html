@@ -4,8 +4,8 @@
   </a>
   <div class="price-note col-10 text-center">
     <div class="progress">
-        <div class="progress-text">The price will be uptated in <b>{{60 - $ctrl.progressBar | number:0}}</b> second</div>
-        <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" style="width: {{$ctrl.progress}}%" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
+        <div class="progress-text">The price will be uptated in <b>{{60 - $ctrl.progressBar | number:0}}</b> seconds</div>
+        <div class="progress-bar bg-info progress-bar-striped progress-bar-animated" role="progressbar" style="width: {{$ctrl.progress}}%" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
     </div>
   </div>
   <a href="#/">Back</a>
@@ -13,28 +13,30 @@
 
  <div class="container">
     <div class="row price-page justify-content-center align-items-center">
-      <div class="col block user-info text-center">
+      <div class="col-sm-6 col-lg-4 block user-info text-center">
         <div class="block-header">Balance:</div>
         <div class="block-body">
-          {{$ctrl.name}}: {{$ctrl.userCryptoOwn}} (${{$ctrl.userCryptoOwn * $ctrl.coin.USD}})<br>
-          USD: {{$ctrl.userMoney}}
+          {{$ctrl.name}}: {{$ctrl.userCryptoOwn}} <p>({{$ctrl.userCryptoOwn * $ctrl.coin.USD | currency:'$':2 }})</p><br>
+          USD: {{$ctrl.userMoney | currency:'$':2}}
          </div>
       </div>
-      <div class="col block text-center">
-        <div class="block-header">Buy/Sell Crypto Price</div>
+      <div class="col-sm-6 col-lg-4 block text-center">
+        <div class="block-header">Buy/Sell</div>
         <div class="block-body">
           <div class="form-group form-group-lg price-input">
             <form name="tradingForm">
-              <input ng-model="$ctrl.inputAmount" ng-change="$ctrl.resetAmount()" ng-pattern="/^[0-9]{1,}\.?[0-9]*$/" name="userAmount" class="trading-form form-control" placeholder="Enter amount here...">
+              <input ng-model="$ctrl.inputAmount" ng-change="$ctrl.resetValidation()" ng-pattern="/^[0-9]{1,}\.?[0-9]*$/" name="userAmount" class="trading-form form-control" placeholder="Enter amount here...">
               <div class="alert alert-danger" ng-show="$ctrl.amountError">Enter at least one digit, mate.</div>
               <div class="alert alert-danger" ng-show="tradingForm.userAmount.$error.pattern">Only numbers, mate.</div>
-              <button ng-disabled="priceForm.userPrice.$error.pattern" ng-click="$ctrl.buy()" type="submit" class="buy-btn btn btn-success">Buy</button> 
-              <!--<button ng-disabled="priceForm.userPrice.$error.pattern" ng-click="$ctrl.sell()" type="submit" class="sell-btn btn btn-danger">Sell</button>-->
+              <div class="alert alert-danger" ng-show="$ctrl.buyError">You dont have enough funds.</div>
+              <div class="alert alert-danger" ng-show="$ctrl.sellError">You dont have enough coins.</div>
+              <button ng-disabled="priceForm.userPrice.$error.pattern" ng-click="$ctrl.buy()" class="buy-btn btn btn-success">Buy</button> 
+              <button ng-disabled="priceForm.userPrice.$error.pattern" ng-click="$ctrl.sell()" class="sell-btn btn btn-danger">Sell</button>
             </form>
           </div>
         </div>
       </div>
-      <div class="col block price text-center">
+      <div class="col-sm-12 col-lg-4 block price text-center">
         <div class="block-header">Current Price</div>
         <div class="block-body">
           <div class="price-up-arrow-block">
@@ -54,14 +56,15 @@
       </div>
     </div>
     <div class="row justify-content-center no-gutters">
-      <div class="col-10 archive-block">
+      <div class="col-6 archive-block">
         <div class="archive-header text-center">
-          Old prices archive
+          Logs
         </div>
         <div class="archive">
-          <div class="archive-item row" key={{new Date()}} ng-repeat="item in $ctrl.priceArchive track by $index">
-            <div class="col">{{item.time | date:'MMM dd, HH:mm'}}</div>
-            <div class="col">${{item.price}}</div>
+          <div class="archive-item row" key={{new Date()}} ng-repeat="item in $ctrl.logs track by $index">
+            <div class="col text-left">Date: {{item.time | date:'MMM dd, HH:mm'}}</div>
+            <div class="col text-center">{{item.operation}}</div>
+            <div class="col text-right">Price: ${{item.price}}</div>
           </div>
         </div>
       </div>

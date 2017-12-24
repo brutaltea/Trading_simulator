@@ -12,15 +12,27 @@ angular.
         this.upShow = false;
         this.downShow = false;
         this.progressBar = 0;
-        this.priceArchive = [];
+        this.logs = [];
         this.amountError = false;
         this.userMoney = 1000;
         this.userCrypto = 0;
         this.userCryptoOwn = 0;
+        this.buyError = false;
+        this.sellError = false;
 
-        this.resetAmount = function resetAmount() {
-          return this.amountError = false;
-        }
+        this.resetValidation = function resetValidation() {
+          this.amountError = false;
+          this.buyError = false;
+          this.sellError = false;
+        };
+
+        this.addTologs = function addTologs(date, price, operation) {
+          this.logs.unshift({
+            price: price,
+            time: date,
+            operation: operation
+          })
+        };
 
         this.progressInterval = function() {
           $interval(function(){
@@ -41,11 +53,7 @@ angular.
         .then(function(response) {
           self.coin = response.data;
           self.oldPrice = self.coin.USD;
-          self.priceArchive.push({
-            price: self.coin.USD,
-            time: new Date()
-          })
-          console.log('Price:', self.oldPrice)
+          self.addTologs(new Date(), self.coin.USD, '');
         });
 
         this.getData = function getData(){
@@ -54,24 +62,15 @@ angular.
           $http.get('https://min-api.cryptocompare.com/data/price?fsym=' + $routeParams.coinId + '&tsyms=USD')
           .then(function(response) {
             self.coin = response.data;
-            self.priceArchive.push({
-              price: self.coin.USD,
-              time: new Date()
-            })
-            console.log(self.priceArchive)
+            self.addTologs(new Date(), self.coin.USD, '');
             this.priceDiff = self.coin.USD - self.oldPrice;
             if (self.coin.USD >= self.oldPrice) {
-              console.log('spread')
               self.upShow = true;
               self.downShow = false;
             } else {
-              console.log('loss');
               self.upShow = false;
               self.downShow = true;
             }
-            console.log('old price:',self.oldPrice)
-            console.log('actual price:', self.coin.USD)
-            console.log('diff', this.priceDiff)
             self.oldPrice = self.coin.USD;
           });
         };
@@ -82,36 +81,40 @@ angular.
          }, 60000)
        };
        this.intervalFunction();
-       
-       this.click = function() {
-        self.progress = 0;
-        self.progressBar = 0;
-        self.getData();
-      };
 
       this.buy = function buy() {
         if (!this.inputAmount){
           this.amountError = true;
           return
         } else {
-          self.userCryptoOwn = self.inputAmount;
-          self.cryptoToUsd = self.userCryptoOwn * self.coin.USD;
-          self.result = function result(){
-
-          }
-        console.log(`buy ${this.inputAmount} of ${this.name}`);
-        }
+          if (this.inputAmount * this.coin.USD > this.userMoney) {
+            this.buyError = true;
+          } else { 
+            this.addTologs(new Date(), self.coin.USD, 'Bought '+this.inputAmount+this.name);
+            this.userCryptoOwn = this.inputAmount;
+            this.cryptoToUsd = this.userCryptoOwn * self.coin.USD;
+            this.userMoney = this.userMoney - this.cryptoToUsd;
+          };
+        };
+        this.inputAmount = '';
       };
 
-     /* this.sell = function sell() {
+     this.sell = function sell() {
         if (!this.inputAmount){
           this.amountError = true;
           return
         } else {
-        console.log(`sell ${this.inputAmount} of ${this.name}`);
-        }
-      };*/
+          if (this.inputAmount > this.userCryptoOwn) {
+            this.sellError = true;
+          } else { 
+            this.addTologs(new Date(), self.coin.USD, 'Sold '+this.inputAmount+this.name);
+            this.userCryptoOwn = this.userCryptoOwn - this.inputAmount;
+            this.userMoney = this.userMoney + this.inputAmount * this.coin.USD;
+        };
+      };
+      this.inputAmount = '';
+    };
 
-    }
+  }
   ]
 });
