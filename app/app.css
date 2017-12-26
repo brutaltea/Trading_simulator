@@ -9,6 +9,9 @@ li {
 .navbar-brand {
   color: #2A9FD6!important;
 }
+.trading-form {
+  border: 1px solid black;
+}
 a{
   color: pink
 }
@@ -133,9 +136,14 @@ a:hover {
   font-size: 32px;
 }
 .archive-item {
+  cursor: pointer;
   padding-left: 15px;
   padding-right: 15px;
   border-bottom: 1px solid black;
+}
+.highlighted {
+  background-color: #2A9FD6;
+  color: azure;
 }
 .archive {
   overflow-y: auto;

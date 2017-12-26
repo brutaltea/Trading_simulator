@@ -1,8 +1,8 @@
 {
-  "name": "price-checker",
+  "name": "Trading Simulator",
   "private": true,
-  "version": "0.0.1",
-  "description": "A starter project for AngularJS",
+  "version": "1.0.0",
+  "description": "buy and sell chosen cryptocurrency by actual price",
   "license": "MIT",
   "devDependencies": {
     "bower": "^1.7.7",

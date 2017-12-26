@@ -115,6 +115,10 @@ angular.
       this.inputAmount = '';
     };
 
+    this.highlight = function highlight(e){
+      $('.highlighted').removeClass('highlighted');
+      e.currentTarget.className += " highlighted";
+    }
   }
   ]
 });

@@ -56,12 +56,12 @@
       </div>
     </div>
     <div class="row justify-content-center no-gutters">
-      <div class="col-6 archive-block">
+      <div class="col-8 archive-block">
         <div class="archive-header text-center">
           Logs
         </div>
         <div class="archive">
-          <div class="archive-item row" key={{new Date()}} ng-repeat="item in $ctrl.logs track by $index">
+          <div class="archive-item row" ng-click="$ctrl.highlight($event)" key={{new Date()}} ng-repeat="item in $ctrl.logs track by $index">
             <div class="col text-left">Date: {{item.time | date:'MMM dd, HH:mm'}}</div>
             <div class="col text-center">{{item.operation}}</div>
             <div class="col text-right">Price: ${{item.price}}</div>
